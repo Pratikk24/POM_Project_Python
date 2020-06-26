@@ -23,6 +23,7 @@ class LoginTest(unittest.TestCase):
         login.enter_username("admin")
         login.enter_password("!3$y$+eMs")
         login.click_login()
+        self.assertEqual("Underwrite Assistant", self.driver.title, "Wabepage title is not matching")
 
         homepage = HomePage(driver)
         homepage.click_Down_Caret_Icon()
