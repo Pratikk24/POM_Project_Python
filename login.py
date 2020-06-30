@@ -23,7 +23,10 @@ class LoginTest(unittest.TestCase):
        login.enter_username("admin")
        login.enter_password("!3$y$+eMs")
        login.click_login()
-
+      
+   def test_homepage_valid(self):
+       self.assertEqual("Underwrite Assistant", self.driver.title)   
+   
 
 
 
