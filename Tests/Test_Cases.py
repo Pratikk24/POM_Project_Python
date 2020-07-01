@@ -4,16 +4,18 @@ import unittest
 from Libraries.LIB_LoginPage import LoginPage
 from Libraries.LIB_HomePage import HomePage
 import HtmlTestRunner
+from Locators.locators import Locators
 
 
-class ClaimsTest(unittest.TestCase):
-    URL = "https://ilgic-claim-al.i3systems.in/#/claims"
-    username = "admin"
-    password = "!3$y$+eMs"
+
+class Bajaj_Claims_Test(unittest.TestCase):
+    URL = Locators.URL
+    username = Locators.Username
+    password = Locators.Password
 
     @classmethod
     def setUpClass(cls):
-        cls.driver = webdriver.Chrome(executable_path="C:/Driver/chromedriver_win32/chromedriver.exe")
+        cls.driver = webdriver.Chrome(Locators.executable_path)
         cls.driver.get(cls.URL)
         cls.driver.implicitly_wait(10)
         cls.driver.maximize_window()
@@ -30,7 +32,7 @@ class ClaimsTest(unittest.TestCase):
         time.sleep(3)
 
     def test_02_Claim_list_Page_Validation(self):
-        self.assertEqual("Claim Assistant", self.driver.title)
+        self.assertEqual(Locators.title, self.driver.title)
 
     def test_03_Navigate_to_Document_Page(self):
         driver = self.driver
@@ -67,4 +69,4 @@ class ClaimsTest(unittest.TestCase):
 
 
 if __name__ == '__main__':
-    unittest.main(testRunner=HtmlTestRunner.HTMLTestRunner(output='C:/Users/Pratik/PycharmProjects/Claims-POM/Reports'))
+    unittest.main(testRunner=HtmlTestRunner.HTMLTestRunner(Locators.output))

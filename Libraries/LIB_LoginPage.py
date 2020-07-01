@@ -11,6 +11,7 @@ class LoginPage():
         self.login_button_css_selector = Locators.login_button_css_selector
 
     # Functions or Action Methods
+
     def enter_username(self, username):
         self.driver.find_element_by_id(self.username_textbox_id).clear()
         self.driver.find_element_by_id(self.username_textbox_id).send_keys(username)
