@@ -15,7 +15,7 @@ class Bajaj_Claims_Test(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        cls.driver = webdriver.Chrome(executable_path="C:/Driver/chromedriver_win32/chromedriver.exe")
+        cls.driver = webdriver.Chrome(Locators.executable_path)
         cls.driver.get(cls.URL)
         cls.driver.implicitly_wait(10)
         cls.driver.maximize_window()
@@ -32,7 +32,7 @@ class Bajaj_Claims_Test(unittest.TestCase):
         time.sleep(3)
 
     def test_02_Claim_list_Page_Validation(self):
-        self.assertEqual("Claim Assistant", self.driver.title)
+        self.assertEqual(Locators.title, self.driver.title)
 
     def test_03_Navigate_to_Document_Page(self):
         driver = self.driver
@@ -69,4 +69,4 @@ class Bajaj_Claims_Test(unittest.TestCase):
 
 
 if __name__ == '__main__':
-    unittest.main(testRunner=HtmlTestRunner.HTMLTestRunner(output='C:/Users/Pratik/PycharmProjects/Claims-POM/Reports'))
+    unittest.main(testRunner=HtmlTestRunner.HTMLTestRunner(Locators.output))
