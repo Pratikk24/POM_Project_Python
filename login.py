@@ -109,6 +109,9 @@ class ClaimsTest(unittest.TestCase):
         cls.driver.close()
         cls.driver.quit()
         print("Test Completed")
+        
+ if __name__ == '__main__':
+    unittest.main(testRunner=HtmlTestRunner.HTMLTestRunner(Locators.output))       
 
 
 
