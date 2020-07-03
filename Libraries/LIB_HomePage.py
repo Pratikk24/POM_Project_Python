@@ -1,5 +1,4 @@
-from pomproject.Locators.locators import Locators
-
+from Locators.locators import Locators
 
 
 class HomePage():
