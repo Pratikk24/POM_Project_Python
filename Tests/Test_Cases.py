@@ -1,9 +1,9 @@
 from selenium import webdriver
 import time
 import unittest
-from pomproject.Libraries.LIB_LoginPage import LoginPage
-from pomproject.Libraries.LIB_HomePage import HomePage
-from pomproject.Locators.locators import Locators
+from Libraries.LIB_LoginPage import LoginPage
+from Libraries.LIB_HomePage import HomePage
+from Locators.locators import Locators
 import HtmlTestRunner
 
 
