@@ -45,6 +45,35 @@ class Bajaj_claims_test(unittest.TestCase):
         driver = self.driver
         homepage = Homepage(driver)
         homepage.click_on_upload_document()
+        # API URL
+#        url = #"http://claim-portal-bajaj-dev.qa.i3systems.in/integrations/case-data/"
+
+     #   headers = {
+               #     "Content-Type" : "application/json",
+                 #   "Authorization": "Token  
+#  0cc04b1e050de4a4b559bdc6ce634bbbb0d510d3"
+                   }
+
+     #   body = {
+ # "claim_type": "REIMBURSEMENT",
+  #"flag": "1",
+# "no_of_document": "1",
+ # "policy_number": "1111111111111",
+ # "hospital_id": "",
+ # "claimant_name": "Mr Amol S",
+ # "member_id": "117985913 blank category test3",
+ # "claim_id": "BYCH0026",
+ # "policy_name": "Activ Assure",
+ # "branch": "",
+ # "category": []
+#}
+        # Make POST Request with Json Input body
+       # response = requests.request("POST", url, headers=headers, data=body)
+       # print(response.text.encode('utf8'))
+        #  Validating response status code
+       # print(response.status_code)
+
+
 
     def test_05_case_upload_successfully_validation(self):
         driver = self.driver
