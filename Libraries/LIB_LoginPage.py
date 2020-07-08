@@ -1,9 +1,10 @@
 from Locators.locators import Locators
 
-class LoginPage():
+
+class Loginpage():
 
     # Constructor
-    def __init__(self,driver):
+    def __init__(self, driver):
         self.driver = driver
 
         self.username_textbox_id = Locators.username_textbox_id
@@ -22,13 +23,3 @@ class LoginPage():
 
     def click_login(self):
         self.driver.find_element_by_css_selector(self.login_button_css_selector).click()
-
-
-
-
-
-
-
-
-
-
