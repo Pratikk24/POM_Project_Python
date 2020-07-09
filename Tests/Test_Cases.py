@@ -8,6 +8,9 @@ import selenium.webdriver.support.expected_conditions as ec
 import time
 import unittest
 import HtmlTestRunner
+import requests
+import json
+import jsonpath
 
 
 class Bajaj_claims_test(unittest.TestCase):
@@ -24,7 +27,49 @@ class Bajaj_claims_test(unittest.TestCase):
         cls.driver.implicitly_wait(10)
         cls.driver.maximize_window()
 
-    def test_01_login_valid(self):
+    def test_01_upload_file(self):
+        url1 = "http://claim-portal-bajaj-dev.qa.i3systems.in/integrations/case-data/"
+        # reading from file
+        file = open('C:/Users/Pratik/PycharmProjects/Claims-POM/Tests/payload', 'r')
+        payload = file.read()
+
+        headers = {
+            'Content-Type': 'application/json',
+            'Authorization': 'Token 0cc04b1e050de4a4b559bdc6ce634bbbb0d510d3'
+        }
+
+        response = requests.request("POST", url1, headers=headers, data=payload)
+
+        print(response.text.encode('utf8'))
+
+        response_json = json.loads(response.text)
+
+        i3caseid = jsonpath.jsonpath(response_json, 'data.i3_case_id')
+
+        print(i3caseid)
+
+        url2 = "http://claim-portal-bajaj-dev.qa.i3systems.in/integrations/upload-document/" + str(
+            i3caseid[0]) + "__3fa1a63ccd64aff1389d9b86a754eff5.zip"
+
+        # reading from file
+
+        # payload = "<file contents here>"
+        print(url2)
+        fin = open('C:/Users/Pratik/PycharmProjects/Claims-POM/Tests/O210328.zip', 'rb')
+        print(fin.name)
+        # files = {'file': fin}
+        data = fin.read()
+        headers = {
+            'Content-Type': 'application/binary',
+            'Authorization': 'Token 0cc04b1e050de4a4b559bdc6ce634bbbb0d510d3'
+        }
+
+        response = requests.request("POST", url2, headers=headers, data=data)
+
+        print(response.text.encode('utf8'))
+
+    def test_02_login_valid(self):
+        time.sleep(15)
         driver = self.driver
         login = Loginpage(driver)
         login.enter_username(self.username)
@@ -32,102 +77,57 @@ class Bajaj_claims_test(unittest.TestCase):
         login.click_login()
         time.sleep(3)
 
-    def test_02_claim_list_page_validation(self):
+    def test_03_claim_list_page_validation(self):
         self.assertEqual(Locators.title, self.driver.title)
 
-    def test_03_navigate_to_document_page(self):
+    def test_04_navigate_to_document_page(self):
         driver = self.driver
         homepage = Homepage(driver)
         homepage.click_on_document_list()
-        time.sleep(2)
+        time.sleep(3)
 
-    def test_04_click_on_upload_document(self):
-        driver = self.driver
-        homepage = Homepage(driver)
-        homepage.click_on_upload_document()
-        # API URL
-#        url = #"http://claim-portal-bajaj-dev.qa.i3systems.in/integrations/case-data/"
-
-     #   headers = {
-               #     "Content-Type" : "application/json",
-                 #   "Authorization": "Token  
-#  0cc04b1e050de4a4b559bdc6ce634bbbb0d510d3"
-                   }
-
-     #   body = {
- # "claim_type": "REIMBURSEMENT",
-  #"flag": "1",
-# "no_of_document": "1",
- # "policy_number": "1111111111111",
- # "hospital_id": "",
- # "claimant_name": "Mr Amol S",
- # "member_id": "117985913 blank category test3",
- # "claim_id": "BYCH0026",
- # "policy_name": "Activ Assure",
- # "branch": "",
- # "category": []
-#}
-        # Make POST Request with Json Input body
-       # response = requests.request("POST", url, headers=headers, data=body)
-       # print(response.text.encode('utf8'))
-        #  Validating response status code
-       # print(response.status_code)
-
-
-
-    def test_05_case_upload_successfully_validation(self):
-        driver = self.driver
-        wait = WebDriverWait(driver, 60)
-        wait.until(ec.text_to_be_present_in_element((By.XPATH, Locators.upload_successfully_x_path), Locators.upload_successfully_text))
-
-    def test_06_click_on_close_button(self):
-        driver = self.driver
-        homepage = Homepage(driver)
-        homepage.click_on_close_button()
-        time.sleep(5)
-
-    def test_07_click_on_refresh_button(self):
+    def test_05_click_on_refresh_button(self):
         driver = self.driver
         homepage = Homepage(driver)
         homepage.click_on_refresh_button()
+        time.sleep(2)
 
-    def test_08_case_create_successfully(self):
+    def test_06_case_create_successfully(self):
         driver = self.driver
         wait = WebDriverWait(driver, 20)
-        wait.until(ec.text_to_be_present_in_element((By.XPATH, Locators.file_name_x_path), Locators.file_name))
         wait.until(ec.text_to_be_present_in_element((By.XPATH, Locators.case_state_x_path), Locators.state))
 
-    def test_09_go_to_claim_list_page(self):
+    def test_07_go_to_claim_list_page(self):
         driver = self.driver
         homepage = Homepage(driver)
         homepage.click_on_claims_list()
         time.sleep(3)
 
-    def test_10_select_case(self):
+    def test_08_select_case(self):
         driver = self.driver
         homepage = Homepage(driver)
         homepage.click_on_select_case()
         time.sleep(2)
 
-    def test_11_allocation_arrow(self):
+    def test_09_allocation_arrow(self):
         driver = self.driver
         homepage = Homepage(driver)
         homepage.click_on_allocation_arrow()
         time.sleep(2)
 
-    def test_12_qc_user_selection(self):
+    def test_10_qc_user_selection(self):
         driver = self.driver
         homepage = Homepage(driver)
         homepage.click_on_qc_user_selection()
         time.sleep(2)
 
-    def test_13_qc_user_allocation(self):
+    def test_11_qc_user_allocation(self):
         driver = self.driver
         homepage = Homepage(driver)
         homepage.click_on_qc_user_allocation()
         time.sleep(3)
 
-    def test_14_logout(self):
+    def test_12_logout(self):
         driver = self.driver
         homepage = Homepage(driver)
         homepage.click_on_three_dot_icon()
@@ -135,7 +135,7 @@ class Bajaj_claims_test(unittest.TestCase):
         homepage.click_on_logout()
         time.sleep(5)
 
-    def test_15_qc_user_login_validation(self):
+    def test_13_qc_user_login_validation(self):
         driver = self.driver
         login = Loginpage(driver)
         login.enter_username(self.qc_username)
@@ -143,22 +143,37 @@ class Bajaj_claims_test(unittest.TestCase):
         login.click_login()
         time.sleep(4)
 
-    def test_16_claim_list_page_validation(self):
+    def test_14_claim_list_page_validation(self):
         self.assertEqual(Locators.title, self.driver.title)
 
-    def test_17_open_case_by_clicking(self):
+    def test_15_open_case_by_clicking(self):
         driver = self.driver
         homepage = Homepage(driver)
         homepage.open_case_by_clicking()
         time.sleep(4)
 
-    def test_18_verify_case(self):
+    def test_16_click_on_all_doc_icon(self):
+        driver = self.driver
+        homepage = Homepage(driver)
+        homepage.click_on_all_doc_icon()
+
+    def test_17_click_all_tabs_in_all_doc_section(self):
+        driver = self.driver
+        homepage = Homepage(driver)
+        homepage.click_all_doc_tabs()
+
+    def test_18_click_on_back_button(self):
+        driver = self.driver
+        homepage = Homepage(driver)
+        homepage.click_back_button()
+
+    def test_19_verify_case(self):
         driver = self.driver
         homepage = Homepage(driver)
         homepage.verify_case()
         time.sleep(3)
 
-    def test_19_logout(self):
+    def test_20_logout(self):
         driver = self.driver
         homepage = Homepage(driver)
         homepage.click_on_three_dot_icon()
