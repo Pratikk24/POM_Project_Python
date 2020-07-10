@@ -13,7 +13,7 @@ import json
 import jsonpath
 
 
-class Bajaj_claims_test(unittest.TestCase):
+class Admin_user_login(unittest.TestCase):
     url = Locators.url
     username = Locators.Username
     password = Locators.Password
@@ -49,13 +49,13 @@ class Bajaj_claims_test(unittest.TestCase):
         print(i3caseid)
 
         url2 = "http://claim-portal-bajaj-dev.qa.i3systems.in/integrations/upload-document/" + str(
-            i3caseid[0]) + "__3fa1a63ccd64aff1389d9b86a754eff5.zip"
+            i3caseid[0]) + "__030ca91feb1c48b9bea2654987a7bf9b21f30ffb.zip"
 
         # reading from file
 
         # payload = "<file contents here>"
         print(url2)
-        fin = open('C:/Users/Pratik/PycharmProjects/Claims-POM/Tests/O210328.zip', 'rb')
+        fin = open('C:/Users/Pratik/PycharmProjects/Claims-POM/Tests/123.zip', 'rb')
         print(fin.name)
         # files = {'file': fin}
         data = fin.read()
@@ -69,13 +69,13 @@ class Bajaj_claims_test(unittest.TestCase):
         print(response.text.encode('utf8'))
 
     def test_02_login_valid(self):
-        time.sleep(15)
+        time.sleep(10)
         driver = self.driver
         login = Loginpage(driver)
         login.enter_username(self.username)
         login.enter_password(self.password)
         login.click_login()
-        time.sleep(3)
+        time.sleep(5)
 
     def test_03_claim_list_page_validation(self):
         self.assertEqual(Locators.title, self.driver.title)
@@ -84,7 +84,7 @@ class Bajaj_claims_test(unittest.TestCase):
         driver = self.driver
         homepage = Homepage(driver)
         homepage.click_on_document_list()
-        time.sleep(3)
+        time.sleep(5)
 
     def test_05_click_on_refresh_button(self):
         driver = self.driver
@@ -135,59 +135,10 @@ class Bajaj_claims_test(unittest.TestCase):
         homepage.click_on_logout()
         time.sleep(5)
 
-    def test_13_qc_user_login_validation(self):
-        driver = self.driver
-        login = Loginpage(driver)
-        login.enter_username(self.qc_username)
-        login.enter_password(self.qc_password)
-        login.click_login()
-        time.sleep(4)
-
-    def test_14_claim_list_page_validation(self):
-        self.assertEqual(Locators.title, self.driver.title)
-
-    def test_15_open_case_by_clicking(self):
-        driver = self.driver
-        homepage = Homepage(driver)
-        homepage.open_case_by_clicking()
-        time.sleep(4)
-
-    def test_16_click_on_all_doc_icon(self):
-        driver = self.driver
-        homepage = Homepage(driver)
-        homepage.click_on_all_doc_icon()
-
-    def test_17_click_all_tabs_in_all_doc_section(self):
-        driver = self.driver
-        homepage = Homepage(driver)
-        homepage.click_all_doc_tabs()
-
-    def test_18_click_on_back_button(self):
-        driver = self.driver
-        homepage = Homepage(driver)
-        homepage.click_back_button()
-
-    def test_19_verify_case(self):
-        driver = self.driver
-        homepage = Homepage(driver)
-        homepage.verify_case()
-        time.sleep(3)
-
-    def test_20_logout(self):
-        driver = self.driver
-        homepage = Homepage(driver)
-        homepage.click_on_three_dot_icon()
-        time.sleep(2)
-        homepage.click_on_logout()
-        time.sleep(3)
-
     @classmethod
     def tearDownClass(cls):
         cls.driver.close()
         cls.driver.quit()
         print("Test Completed")
 
-
-if __name__ == '__main__':
-    unittest.main(testRunner=HtmlTestRunner.HTMLTestRunner(Locators.output))
 
